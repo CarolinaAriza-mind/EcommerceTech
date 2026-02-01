@@ -1,21 +1,28 @@
 import { registerAs } from '@nestjs/config';
 import { config as dotenvConfig } from 'dotenv';
-import { environment } from './enviroment.dev';
-dotenvConfig({ path: '.env.development.local' });
+
+// Solo carga .env.development.local en desarrollo
+if (process.env.NODE_ENV !== 'production') {
+  dotenvConfig({ path: '.env.development.local' });
+}
 
 const config = {
   type: 'postgres',
-  database: environment.DB_NAME || 'ecommerce_pm4',
-  localhost: environment.HOST || 'localhost',
-  dbport: Number(environment.DB_PORT) || 5432,
-  username: environment.DB_USERNAME || 'postgres',
-  password: environment.DB_PASSWORD,
+  host: process.env.DB_HOST || 'localhost',
+  port: Number(process.env.DB_PORT) || 5432,
+  username: process.env.DB_USERNAME || 'postgres',
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME || 'ecommerce_pm4',
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/migrations/*{.ts,.js}'],
   autoLoadEntities: true,
-  logging: true,
-  synchronize: true,
+  logging: process.env.NODE_ENV !== 'production',
+  synchronize: process.env.NODE_ENV !== 'production', // ⚠️ FALSE en producción
   dropSchema: false,
+  ssl:
+    process.env.NODE_ENV === 'production'
+      ? { rejectUnauthorized: false }
+      : false,
 };
 
 export const typeOrmConfig = registerAs('typeorm', () => config);
