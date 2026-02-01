@@ -37,7 +37,6 @@ export class LogginUserDto {
 
   @ApiProperty({
     description: 'JWT',
-    example: 'eyskkeunsjsj7383njudu844n3',
   })
   accessToken: string;
 }
