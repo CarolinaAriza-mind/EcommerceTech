@@ -16,7 +16,7 @@ const config = {
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/migrations/*{.ts,.js}'],
   autoLoadEntities: true,
-  logging: process.env.NODE_ENV !== 'production',
+  logging: true,
   synchronize: true, // ⚠️ FALSE en producción
   dropSchema: false,
   ssl:
