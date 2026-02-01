@@ -24,11 +24,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document, {
     swaggerOptions: {
-      defaultModelsExpandDepth: -1,
-      docExpansion: 'none',
-      filter: true,
       showRequestHeaders: false,
-      tryItOutEnabled: true,
     },
     customCss: '.swagger-ui .response-col_description { display: none; }',
   });
