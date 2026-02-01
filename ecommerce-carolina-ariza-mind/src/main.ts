@@ -22,12 +22,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('api', app, document, {
-    swaggerOptions: {
-      showRequestHeaders: false,
-    },
-    customCss: '.swagger-ui .response-col_description { display: none; }',
-  });
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(environment.PORT);
   console.log(

@@ -12,7 +12,6 @@ import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { typeOrmConfig } from './config/dataSource';
 import { CategoriesModule } from './categories/categories.module';
 import { OrdersModule } from './orders/orders.module';
 import { CategoriesService } from './categories/categories.service';
@@ -24,12 +23,28 @@ import { JwtModule } from '@nestjs/jwt';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [typeOrmConfig],
+      envFilePath:
+        process.env.NODE_ENV === 'production'
+          ? '.env'
+          : '.env.development.local',
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) =>
-        configService.get('typeorm')!,
+      useFactory: (config: ConfigService) => ({
+        type: 'postgres',
+        host: config.get<string>('DB_HOST') || 'localhost',
+        port: Number(config.get<number>('DB_PORT')) || 5432,
+        username: config.get<string>('DB_USERNAME'),
+        password: config.get<string>('DB_PASSWORD'),
+        database: config.get<string>('DB_NAME'),
+        autoLoadEntities: true,
+        logging: config.get('NODE_ENV') !== 'production',
+        synchronize: config.get('NODE_ENV') !== 'production',
+        ssl:
+          config.get('NODE_ENV') === 'production'
+            ? { rejectUnauthorized: false }
+            : false,
+      }),
     }),
     UsersModule,
     AuthModule,
