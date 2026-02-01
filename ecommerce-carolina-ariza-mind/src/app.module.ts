@@ -52,9 +52,20 @@ export class AppModule implements NestModule, OnApplicationBootstrap {
   }
 
   async onApplicationBootstrap() {
-    await this.categoriesService.addCategories();
-    console.log('Categorias cargadas correctamente');
-    await this.productsService.addProducts();
-    console.log('Productos cargados correctamente');
+    try {
+      // Esperar un poco para que TypeORM termine de sincronizar
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      console.log('Iniciando carga de datos...');
+      await this.categoriesService.addCategories();
+      console.log('Categorias cargadas correctamente');
+
+      await this.productsService.addProducts();
+      console.log('Productos cargados correctamente');
+    } catch (error) {
+      console.error('Error al iniciar la aplicación:', error);
+      // No lanzar el error para que la app siga funcionando
+      console.log('La aplicación continuará sin datos iniciales');
+    }
   }
 }
