@@ -24,9 +24,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(environment.PORT);
+  await app.listen(process.env.PORT || 5000);
   console.log(
-    `Servidor escuchando en http://${environment.HOST}:${environment.PORT}`,
+    `Servidor escuchando en http://${process.env.HOST}:${process.env.PORT}`,
   );
 }
 bootstrap().catch((err) => {
