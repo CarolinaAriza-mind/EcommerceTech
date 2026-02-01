@@ -34,4 +34,10 @@ export class LogginUserDto {
     example: 'Abcd**12',
   })
   password: string;
+
+  @ApiProperty({
+    description: 'JWT',
+    example: 'eyskkeunsjsj7383njudu844n3',
+  })
+  accessToken: string;
 }
