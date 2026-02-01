@@ -18,6 +18,7 @@ import { CategoriesService } from './categories/categories.service';
 import { ProductsService } from './products/products.service';
 import { FileUploadModule } from './fileUpload/fileUpload.module';
 import { JwtModule } from '@nestjs/jwt';
+import { typeOrmConfig } from './config/dataSource'; // 👈 Importa tu config
 
 @Module({
   imports: [
@@ -27,24 +28,14 @@ import { JwtModule } from '@nestjs/jwt';
         process.env.NODE_ENV === 'production'
           ? '.env'
           : '.env.development.local',
+      load: [typeOrmConfig], // 👈 Carga tu configuración
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        type: 'postgres',
-        host: config.get<string>('DB_HOST') || 'localhost',
-        port: Number(config.get<number>('DB_PORT')) || 5432,
-        username: config.get<string>('DB_USERNAME'),
-        password: config.get<string>('DB_PASSWORD'),
-        database: config.get<string>('DB_NAME'),
-        autoLoadEntities: true,
-        logging: config.get('NODE_ENV') !== 'production',
-        synchronize: config.get('NODE_ENV') !== 'production',
-        ssl:
-          config.get('NODE_ENV') === 'production'
-            ? { rejectUnauthorized: false }
-            : false,
-      }),
+      useFactory: (configService: ConfigService) => {
+        // 👈 Usa la configuración que ya definiste
+        return configService.get('typeorm');
+      },
     }),
     UsersModule,
     AuthModule,
@@ -62,6 +53,7 @@ export class AppModule implements NestModule, OnApplicationBootstrap {
     private readonly categoriesService: CategoriesService,
     private readonly productsService: ProductsService,
   ) {}
+
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('*');
   }
