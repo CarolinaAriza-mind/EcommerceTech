@@ -12,7 +12,7 @@ const config = {
   port: Number(process.env.DB_PORT) || 5432,
   username: process.env.DB_USERNAME || 'postgres',
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME || 'ecommerce_pm4',
+  database: process.env.DB_NAME || 'ecommerce_pm4_y248',
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/migrations/*{.ts,.js}'],
   autoLoadEntities: true,
