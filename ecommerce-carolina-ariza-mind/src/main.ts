@@ -13,7 +13,7 @@ async function bootstrap() {
   );
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('API ecommerce')
+    .setTitle('EcommerceTech')
     .setDescription(
       'Aplicacion de ecommerce para proyecto integrador del Modulo 4, de la carrera de FullStack Development de la academia Henry',
     )
