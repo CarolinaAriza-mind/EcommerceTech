@@ -12,12 +12,14 @@ const config = {
   port: Number(process.env.DB_PORT) || 5432,
   username: process.env.DB_USERNAME || 'postgres',
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME || 'ecommerce_pm4_y248',
+  database: process.env.DB_NAME || 'ecommerce_pm4',
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/migrations/*{.ts,.js}'],
   autoLoadEntities: true,
-  logging: true,
-  synchronize: true, // ⚠️ FALSE en producción
+  logging: process.env.NODE_ENV !== 'production',
+  synchronize:
+    process.env.DB_SYNCHRONIZE === 'true' ||
+    process.env.NODE_ENV !== 'production', // ⚠️ FALSE en producción
   dropSchema: false,
   ssl:
     process.env.NODE_ENV === 'production'
