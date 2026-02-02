@@ -57,18 +57,21 @@ npm install
 
 # Levantar el proyecto en modo desarrollo
 npm run start:dev
+```
 
-🌐 Deploy
+## 🌐 Deploy
 
-La aplicación se encuentra desplegada en Render y lista para ser probada desde Swagger:
+La aplicación se encuentra desplegada en **Render** y lista para ser probada desde **Swagger**.
 
-🔗 URL de producción
-https://ecommercetech-uye6.onrender.com/api#
+🔗 **URL de producción**  
+👉 [Probar API en Swagger](https://ecommercetech-uye6.onrender.com/api#)
 
-🧑‍💻 Autora
+---
 
-Carolina Ariza
-Backend / Full Stack Developer
+## 🧑‍💻 Autora
 
-GitHub: https://github.com/CarolinaAriza-mind
+**Carolina Ariza**  
+Backend / Full Stack Developer  
+
+GitHub: 👉 [CarolinaAriza-mind](https://github.com/CarolinaAriza-mind)
 
